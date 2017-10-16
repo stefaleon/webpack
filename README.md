@@ -232,3 +232,72 @@ console.log(total);
 ```
 
 Build again, the result is the same.
+
+
+
+&nbsp;
+## 05 Handle CSS
+
+* Add the *image_viewer.js* file in the *src* folder.
+
+**image_viewer.js**
+```
+const image = document.createElement('img');
+image.src = 'http://lorempixel.com/400/400';
+
+document.body.appendChild(image);
+```
+
+* Import *image_viewer.js* in *index.js*
+
+**index.js:**
+```
+import sum from './sum';
+import './image_viewer';
+
+const total = sum(10,5);
+console.log(total);
+```
+Build again, now an image from *lorempixel* appears in the browser.
+
+* Add the *styles* folder and the *image_viewer.css* file.
+
+**image_viewer.css**
+```
+img {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width: 150px;
+}
+```
+
+
+* Import *image_viewer.css* in *image_viewer.js*.
+
+**image_viewer.js**
+```
+import '../styles/image_viewer.css';
+
+const image = document.createElement('img');
+image.src = 'http://lorempixel.com/400/400';
+
+document.body.appendChild(image);
+```
+
+* In order for webpack to recognize and handle the CSS files, install *css-loader* and *style-loader*.
+
+```
+$ npm install --save-dev css-loader style-loader
+```
+
+* Add the appropriate rules in *webpack.config.js*. Loaders are applied from right to left, so the *style-loader* must precede *css-loader*.
+
+```
+{
+  use: ['style-loader','css-loader]',
+  test: /\.css$/
+}
+```
+
+* Build again, now the style is applied to the image.
