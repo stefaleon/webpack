@@ -36,7 +36,7 @@ $ npm init
 
 * Add the *src* folder and the *index.js* and *sum.js* files.
 
-**index.js: requires sum.js and calls it with the numbers 10 and 5**
+**index.js:** requires sum.js and calls it with the numbers 10 and 5
 
 ```
 const sum = require('./sum');
@@ -45,13 +45,15 @@ const total = sum(10,5);
 console.log(total);
 ```
 
-**sum.js: adds a and b**
+**sum.js:** adds a and b
 
 ```
 const sum = (a,b) => a+b;
 
 module.exports = sum;
 ```
+
+Build again, the result is the same.
 
 
 
@@ -207,3 +209,26 @@ var sum = function sum(a, b) {
 };
 ```
 proving that babel has been applied successfully.
+
+
+&nbsp;
+## 04 CommonJS to ES2015
+
+* Refactor *sum.js* and *index.js* using **ES2015** syntax in place of the former **CommonJS** syntax.
+
+**sum.js:** using *export default* instead of *module.exports*
+```
+const sum = (a,b) => a+b;
+
+export default sum;
+```
+
+**index.js:** using *import ... from* instead of *require*.
+```
+import sum from './sum';
+
+const total = sum(10,5);
+console.log(total);
+```
+
+Build again, the result is the same.
