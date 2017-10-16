@@ -140,3 +140,70 @@ module.exports =  config;
 $ npm run build
 ```
 If we open *index.html* in a browser, we can now see the result *15* in the console output of the browser.
+
+
+
+&nbsp;
+## 03 Add babel
+
+* Install the babel loaders.
+
+```
+$ npm install --save-dev babel-loader babel-core babel-preset-env
+
+```
+
+* In *webpack.config.js*, add the *module* property which contains the *rules* array. The loader rules dictate that the *babel-loader* gets loaded and applied to files ending with the *.js* extension.
+
+**webpack.config.js**
+```
+const path = require('path');
+
+const config = {
+  entry: './src/index.js',
+  output: {
+    path: path.resolve(__dirname, 'build'),
+    filename: 'bundle.js'
+  },
+  module: {
+    rules: [
+      {
+        use: 'babel-loader',
+        test: /\.js$/
+      }
+    ]
+  }
+};
+
+module.exports =  config;
+```
+
+* Add the *.babelrc* file and define the babel-presets.
+
+**.babelrc**
+```
+{
+  "presets" : ["babel-preset-env"]
+}
+```
+
+* Build again.
+```
+$ npm run build
+```
+
+
+
+The *bundle.js* file previously contained
+```
+/***/ (function(module, exports) {
+
+const sum = (a,b) => a+b;
+```
+Now it contains
+```
+var sum = function sum(a, b) {
+  return a + b;
+};
+```
+proving that babel has been applied successfully.
