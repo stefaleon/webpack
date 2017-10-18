@@ -301,3 +301,44 @@ $ npm install --save-dev css-loader style-loader
 ```
 
 * Build again, now the style is applied to the image.
+
+
+
+&nbsp;
+## 06 Extract CSS
+
+* With the previous implementation, all CSS was added inside *bundle.js*. It is preferable to bundle CSS to a separate file.  This can be done by use of an appropriate plugin library.
+
+* Install the text extracting plugin library.
+```
+$ npm install --save-dev extract-text-webpack-plugin
+```
+
+* In *webpack.config.js*...
+```
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+```
+and replace the existing *use* part for CSS
+
+```
+use: ExtractTextPlugin.extract({
+  fallback: "style-loader",
+  use: "css-loader"
+})
+```
+
+and save all CSS instances in *style.css* by setting up the *plugins* array...
+
+```
+plugins: [
+  new ExtractTextPlugin('styles.css')
+]
+```
+
+* Build again, now the CSS rules are removed from *bundle.js* and added to *style.css*.
+
+* Now of course the relative *link* must be added to the head section of *index.html* in order to apply the required styling.
+
+```
+<link rel="stylesheet" href="build/styles.css" />
+```
